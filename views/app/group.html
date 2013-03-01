@@ -1,0 +1,60 @@
+<Head:>
+  <link href="/base.css" rel="stylesheet">
+
+<Title:>
+  DerbyJS • resourceMVC
+
+<Header:>
+  <ui:connectionAlert>
+
+<Body:>
+  <section id="resourceapp">
+    <app:resourceHeader>
+
+    <section id="main" class="{#unless _list.shown}empty-list{/}">
+      <input id="toggle-all" type="checkbox" checked="{noItems(_list.active)}" x-bind=click:clickToggleAll>
+      <label for="toggle-all">Mark all as complete</label>
+      <ul id="resource-list">{#each _list.shown}<app:resource>{/}</ul>
+    </section>
+
+    <app:resourceFooter>
+  </section>
+  <app:info>
+
+<resourceHeader:>
+  <header id="header">
+    <h1>resources</h1>
+    <form x-bind=submit:add><input id="new-resource" placeholder="What needs to be done?" value={_newResource} autofocus></form>
+  </header>
+
+<resource:>
+  <li data-id={{id}} class="active{#if ._editing} editing{/}">
+    <div>
+      <input class="toggle" type="checkbox">
+      <form x-bind=submit:submitEdit>
+        <input class="text" x-bind="focus:startEdit, blur:endEdit" value="{.text}">
+      </form>
+      <button class="destroy" x-bind=click:del></button>
+    </div>
+  </li>
+
+<resourceFooter:>
+  <footer id="footer" class="{#unless _list.all}empty-list{/}">
+  <span id="resource-count"><strong>{_list.active.length}</strong> item{#unless oneItem(_list.active)}s{/} left</span>
+    <ul id="filters">
+      <li class="all">
+        <a href="/{{_groupName}}" class="{#if equal(_filter, 'all')}selected{/}">All</a>
+      </li>
+      <li class="active">
+        <a href="/{{_groupName}}/active" class="{#if equal(_filter, 'active')}selected{/}">Active</a>
+      </li>
+    </ul>
+  </footer>
+
+<info:>
+  <footer id="info">
+    <h3>Open this <a href="/{{_groupName}}">app</a> in another browser, or share it with a friend to collaborate!</h3>
+    <p>Click on a resource to edit</p>
+    <p>Created by <a href="http://micknelson.wordpress.com">Michael Nelson</a> and <a href="https://github.com/lackac">László Bácsi</a></p>
+    <p>Part of <a href="http://resourcemvc.com">resourceMVC</a></p>
+  </footer>
